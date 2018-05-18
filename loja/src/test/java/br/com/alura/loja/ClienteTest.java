@@ -40,33 +40,22 @@ public class ClienteTest {
 	}
 
 	@Test
-	public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
-		String conteudo = target.path("/carrinhos").request().get(String.class);
-		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
-		Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
-	}
+    public void testaQueBuscarUmCarrinhoTrasUmCarrinho() {
+        WebTarget target = client.target("http://localhost:8080");
+        Carrinho carrinho = target.path("/carrinhos/1").request().get(Carrinho.class);
+        Assert.assertEquals("Rua Vergueiro 3185, 8 andar",carrinho.getRua());
+    }
 
 	@Test
-	public void testaQueBuscarUmCarrinhoTrasUmCarrinho() {
-		String conteudo = target.path("/carrinhos/1").request().get(String.class);
-		Carrinho fromXML = (Carrinho) new XStream().fromXML(conteudo);
-		Assert.assertEquals("Rua Vergueiro 3185, 8 andar", fromXML.getRua());
-	}
+    public void testaQueSuportaNovosCarrinhos(){
+        WebTarget target = client.target("http://localhost:8080");
+        Carrinho carrinho = new Carrinho();
+        carrinho.adiciona(new Produto(314L, "Tablet", 999, 1));
+        carrinho.setRua("Rua Vergueiro");
+        carrinho.setCidade("Sao Paulo");
 
-	@Test
-	public void testaQueSuportaNovosCarrinhos() {
-		Carrinho carrinho = new Carrinho();
-		carrinho.adiciona(new Produto(314L, "Tablet", 999, 1));
-		carrinho.setRua("Rua Vergueiro");
-		carrinho.setCidade("Sao Paulo");
-		String xml = carrinho.toXML();
-
-		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
-
-		Response response = target.path("/carrinhos").request().post(entity);
-		Assert.assertEquals(201, response.getStatus());
-		String location = response.getHeaderString("Location");
-		String conteudo = client.target(location).request().get(String.class);
-		Assert.assertTrue(conteudo.contains("Microfone"));
-	}
+        Entity<Carrinho> entity = Entity.entity(carrinho, MediaType.APPLICATION_XML);
+        Response response = target.path("/carrinhos").request().post(entity);
+        Assert.assertEquals(201, response.getStatus());
+    }
 }

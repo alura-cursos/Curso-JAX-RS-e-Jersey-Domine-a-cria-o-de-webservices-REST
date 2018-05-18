@@ -16,10 +16,12 @@ import junit.framework.Assert;
 
 public class ProjetoTest {
 	private HttpServer server;
+	private Client client;
 
 	@Before
 	public void startaServidor() {
 		this.server = Servidor.inicializaServidor();
+		client = ClientBuilder.newClient();
 	}
 
 	@After
@@ -29,27 +31,15 @@ public class ProjetoTest {
 	
 	@Test
     public void testaQueAConexaoComOServidorFuncionaNoPathDeProjetos() {
-        Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8080");
-        String conteudo = target.path("/projetos").request().get(String.class);
-        Assert.assertTrue(conteudo.contains("<nome>Minha loja"));
+        Projeto projeto = target.path("/projetos/1").request().get(Projeto.class);
+        Assert.assertEquals(1L, projeto.getId(),0);
     }
-	
-    @Test
-    public void testaQueBuscarUmProjetoTrazOProjetoEsperado() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080");
-        String conteudo = target.path("/projetos").request().get(String.class);
-        Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
-        Assert.assertEquals("Minha loja", projeto.getNome());
-    }
-    
+
     @Test
     public void testaQueBuscarUmProjetoTrasUmProjeto() {
-        Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:8080");
-        String conteudo = target.path("/projetos/1").request().get(String.class);
-        Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
+        Projeto projeto = target.path("/projetos/1").request().get(Projeto.class);
         Assert.assertEquals("Minha loja", projeto.getNome());
     }
 }

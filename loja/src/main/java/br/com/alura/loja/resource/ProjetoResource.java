@@ -22,10 +22,9 @@ public class ProjetoResource {
 
 	@Path("{id}")
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
-	public String busca(@PathParam("id") long id) {
+	public Projeto busca(@PathParam("id") long id) {
 		Projeto projeto = new ProjetoDAO().busca(id);
-		return projeto.toXML();
+		return projeto;
 	}
 
 	@POST

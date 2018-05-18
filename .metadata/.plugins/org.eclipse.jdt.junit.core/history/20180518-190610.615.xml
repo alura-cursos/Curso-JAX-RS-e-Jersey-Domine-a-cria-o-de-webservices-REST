@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ProjetoTest" project="loja" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="br.com.alura.loja.ProjetoTest" time="1.373">
+    <testcase name="testaQueAConexaoComOServidorFuncionaNoPathDeProjetos" classname="br.com.alura.loja.ProjetoTest" time="1.165"/>
+    <testcase name="testaQueBuscarUmProjetoTrasUmProjeto" classname="br.com.alura.loja.ProjetoTest" time="0.208"/>
+  </testsuite>
+</testrun>
