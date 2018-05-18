@@ -13,26 +13,26 @@ import javax.ws.rs.core.Response;
 
 import com.thoughtworks.xstream.XStream;
 
-import br.com.alura.loja.dao.CarrinhoDAO;
-import br.com.alura.loja.modelo.Carrinho;
+import br.com.alura.loja.dao.ProjetoDAO;
+import br.com.alura.loja.modelo.Projeto;
 
-@Path("carrinhos")
-public class CarrinhoResource {
+@Path("projetos")
+public class ProjetoResource {
 
 	@Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public String busca(@PathParam("id") long id) {
-		Carrinho carrinho = new CarrinhoDAO().busca(id);
-		return carrinho.toXML();
-	}
+        Projeto projeto = new ProjetoDAO().busca(id);
+        return projeto.toXML();
+    }
 	
 	@POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response adiciona(String conteudo) {
-        Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
-        new CarrinhoDAO().adiciona(carrinho);
-        URI uri = URI.create("/carrinhos/" + carrinho.getId());
+     public Response adiciona(String conteudo) {
+        Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
+        new ProjetoDAO().adiciona(projeto);
+        URI uri = URI.create("/projetos/" + projeto.getId());
         return Response.created(uri).build();
     }
 }
