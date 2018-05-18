@@ -1,0 +1,14 @@
+package br.com.alura.loja;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+
+import org.junit.jupiter.api.Test;
+
+public class ClientTest {
+	@Test
+	public void testaQueAConexaoComOServidorFunciona()
+	{
+		Client client = ClientBuilder.newClient();
+	}
+}

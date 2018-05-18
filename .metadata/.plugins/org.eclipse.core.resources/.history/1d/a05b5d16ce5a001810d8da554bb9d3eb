@@ -1,0 +1,11 @@
+package br.com.alura.loja;
+
+import org.junit.jupiter.api.Test;
+
+@Test
+public class ClientTest {
+	public void testaQueAConexaoComOServidorFunciona()
+	{
+		Client client = new Client();
+	}
+}

@@ -1,0 +1,6 @@
+package br.com.alura.loja.modelo;
+
+public class Projeto {
+	private String nome;
+	
+}
