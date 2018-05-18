@@ -55,6 +55,7 @@ public class ClienteTest {
 
 	@Test
 	public void testaQueSuportaNovosCarrinhos() {
+		WebTarget target = client.target("http://localhost:8080");
 		Carrinho carrinho = new Carrinho();
 		carrinho.adiciona(new Produto(314L, "Tablet", 999, 1));
 		carrinho.setRua("Rua Vergueiro");

@@ -23,15 +23,12 @@ import junit.framework.Assert;
 public class ClienteTest {
 	private HttpServer server;
     private Client client;
-    WebTarget target;
-    
     @Before
     public void before(){
         server = Servidor.inicializaServidor();
         ClientConfig config = new ClientConfig();
         config.register(new LoggingFilter());
         this.client = ClientBuilder.newClient(config);
-		target = client.target("http://localhost:8080");
     }
 
 	@After
@@ -41,6 +38,8 @@ public class ClienteTest {
 
 	@Test
 	public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target("http://localhost:8080");
 		String conteudo = target.path("/carrinhos").request().get(String.class);
 		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
 		Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
@@ -48,6 +47,8 @@ public class ClienteTest {
 
 	@Test
 	public void testaQueBuscarUmCarrinhoTrasUmCarrinho() {
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target("http://localhost:8080");
 		String conteudo = target.path("/carrinhos/1").request().get(String.class);
 		Carrinho fromXML = (Carrinho) new XStream().fromXML(conteudo);
 		Assert.assertEquals("Rua Vergueiro 3185, 8 andar", fromXML.getRua());
@@ -55,6 +56,8 @@ public class ClienteTest {
 
 	@Test
 	public void testaQueSuportaNovosCarrinhos() {
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target("http://localhost:8080");
 		Carrinho carrinho = new Carrinho();
 		carrinho.adiciona(new Produto(314L, "Tablet", 999, 1));
 		carrinho.setRua("Rua Vergueiro");
